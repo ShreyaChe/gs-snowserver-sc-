@@ -47,16 +47,8 @@ app.use(function(req, res, next) {
    {  if (err) throw err; });
    res.locals.connection.query('CREATE TABLE IF NOT EXISTS user ( id smallint unsigned not null auto_increment, username varchar(50) not null, email varchar(50) not null, password varchar(50) not null,constraint pk_example primary key (id) )', function (err)
    { if (err) throw err; });
-
-
-
-
-
-    next();
-  
+    next();  
   });
-
-  
 
 app.use('/api/v1/user', user);
 app.use('/api/v1/generate_uid', generate_uid);

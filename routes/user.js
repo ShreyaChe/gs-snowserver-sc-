@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var UserService = require('../services/service.user');
+
 /* GET users listing. */
 router.get('/',async function(req, res, next) {
  // res.json({error: "Invalid User UID."});
-    res.locals.connection.query('SELECT * from user', function (error, results, fields) {
+    res.locals.connection.query('SELECT username from user', function (error, results, fields) {
 
 	if (error) {
 
@@ -59,16 +60,28 @@ router.post('/login', async (req, res, next) =>
 
 {
 	try
-	{
-		res.locals.connection.query('SELECT * from user WHERE email = ? AND password = ?' ,[req.body.email,req.body.password], function (error, results, fields) {
-			if (error) {
-				res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
-			} else {
-					res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	{   let axios= require('axios');
+		 
+		 this.userid = req.body.email
+ 		this.password = req.body.password
+		const options={
+			url:`https://dev65392.service-now.com/api/now/v2/table/sys_user?user_name=${this.userid}`,
+			method:'get',
+			auth:{
+				username:`${this.userid}`,
+				password:`${this.password}`
 			}
+		};
+		axios(options).then((val)=>{
+			var rs={
+				raw:val,
+				status:val.status
+			}
+			return res.status(202).json({ response: true });
+		},(rej)=>{
+			return res.status(202).json({ response: false});
 		});
-		//const user = await UserService.getuser(req.body);
-		return res.json({ user: user });
+		  
 	}
 	catch(err)
 	{
