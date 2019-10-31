@@ -5,19 +5,7 @@ var UserService = require('../services/service.user');
 /* GET users listing. */
 router.get('/',async function(req, res, next) {
  // res.json({error: "Invalid User UID."});
-    res.locals.connection.query('SELECT username from user', function (error, results, fields) {
-
-	if (error) {
-
-		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
-
-		//If there is error, we send the error in the error section with 500 status
-
-	} else {
-
-	res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
-	}
-});
+    
 });
 
 router.post('/', async (req, res, next) =>
