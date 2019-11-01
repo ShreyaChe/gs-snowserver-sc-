@@ -2,7 +2,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var generate_uid = require('./routes/generate_uid');
 var user = require('./routes/user');
 var incidents = require('./routes/incidents');
 process.on('uncaughtException', function (err)
@@ -41,7 +40,7 @@ app.use(function(req, res, next) {
 
 app.use('/api/v1/user', user);
 app.use('/api/v1/incidents', incidents);
-app.use('/api/v1/generate_uid', generate_uid);
+ 
 
 
 
